@@ -1,0 +1,17 @@
+import pandas as pd
+
+def load_csv_to_db():
+    path=''
+    temp_df=pd.read_csv(path)
+    conn=''
+    cursor=conn.cursor
+    column_list=temp_df.columns
+    values=temp_df.values.tolist()
+    table_name=''
+    insert_query = "INSERT INTO {} ({}) VALUES({})".format(
+        table_name,
+        ", ".join(column_list),
+        ":" + ", :".join(column_list)
+    )
+    cursor.executemany(insert_query, values)
+    conn.commit()
